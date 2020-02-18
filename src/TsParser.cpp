@@ -30,9 +30,16 @@ Translations TsParser::parse(const std::string &filename) const
                 msg.translation =
                     msgNode.firstChildElement("translation").text();
 
+                msg.comment = msgNode.firstChildElement("comment").text();
+                QDomElement extraCommentNode =
+                    msgNode.firstChildElement("extracomment");
+                if (!extraCommentNode.isNull()) {
+                    msg.comment = extraCommentNode.text();
+                }
+
                 if (std::find_if(tr_objs.begin(), tr_objs.end(),
                                  [&msg](const TranslationObj &tr) {
-                                     return tr.source == msg.source;
+                                     return tr.source == msg.source && tr.name == msg.name;
                                  }) == tr_objs.end()) {
                     tr_objs.emplace_back(msg);
                 }

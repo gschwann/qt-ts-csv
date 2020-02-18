@@ -11,5 +11,7 @@ class CsvBuilder
     void build(const std::string &output_filename, Translations trs) const;
 
   private:
+    QString quotedText(const QString &text) const;
+
     CsvProperty property_;
 };
